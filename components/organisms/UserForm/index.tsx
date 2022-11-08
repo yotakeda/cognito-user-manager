@@ -5,11 +5,49 @@ import React from "react";
 
 import styles from "./styles.module.css";
 
+const formItemLayout = {
+  labelCol: {
+    xs: { span: 24 },
+    sm: { span: 8 },
+    md: { span: 6 },
+  },
+  wrapperCol: {
+    xs: { span: 24 },
+    sm: { span: 16 },
+    md: { span: 18 },
+  },
+};
+
+export const passwordRules = [
+  {
+    min: 8,
+    message: "Password must contain at least 8 characters",
+  },
+  {
+    pattern: /(?=.*[a-z])/,
+    message: " Password must contain a lower case letter",
+  },
+  {
+    pattern: /(?=.*[A-Z])/,
+    message: "Password must contain an upper case letter",
+  },
+  {
+    pattern: /(?=.*[0-9])/,
+    message: "Password must contain a number",
+  },
+  {
+    pattern: /(?=.*[\^$*.\[\]{}\(\)?\-“!@#%&/,><\’:;|_~`])/,
+    message: "Password must contain a special character",
+  },
+];
+
 export const UserForm = ({
   type,
+  onSubmit,
   initialValues,
 }: {
   type: "create" | "update";
+  onSubmit: () => void;
   initialValues?: {
     username: string | undefined;
     email: string | undefined;
@@ -36,8 +74,13 @@ export const UserForm = ({
           </Col>
         )}
       </Row>
-      <Card title="User Information">
-        <Form form={form} scrollToFirstError>
+      <Card title={type === "create" ? "Create User" : "User Information"}>
+        <Form
+          form={form}
+          {...formItemLayout}
+          scrollToFirstError
+          onFinish={onSubmit}
+        >
           <Form.Item
             name="username"
             label="username"
@@ -45,6 +88,16 @@ export const UserForm = ({
           >
             <Input disabled={type === "update"} />
           </Form.Item>
+          {type === "create" && (
+            <Form.Item
+              name="password"
+              label="password"
+              rules={passwordRules}
+              hasFeedback
+            >
+              <Input.Password autoComplete="new-password" />
+            </Form.Item>
+          )}
           <Form.Item
             name="email"
             label="email"
