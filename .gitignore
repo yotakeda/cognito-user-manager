@@ -58,3 +58,5 @@ amplifytools.xcconfig
 
 # add team-provider-info
 amplify/team-provider-info.json
+
+!.env.sample
