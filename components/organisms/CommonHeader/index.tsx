@@ -8,7 +8,7 @@ export const CommonHeader = () => {
   return (
     <Row justify="space-between">
       <Col>
-        <div>Logo</div>
+        <div>Sample Logo</div>
       </Col>
       <Col>
         <Space>

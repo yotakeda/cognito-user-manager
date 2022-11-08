@@ -1,3 +1,4 @@
+import React from "react";
 import { User } from "components/templates/User";
 import Head from "next/head";
 

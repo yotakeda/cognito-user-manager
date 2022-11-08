@@ -12,54 +12,54 @@ export const Users = () => {
   }, []);
 
   return (
-    <main>
-      <Space direction="vertical" size="large">
-        <Button type="primary">Create User</Button>
-        <Table
-          loading={isFetching}
-          columns={[
-            {
-              title: "UserName",
-              dataIndex: "Username",
-              render: (value) => {
-                return (
-                  <Link
-                    href={{
-                      pathname: "users/[username]",
-                      query: { username: value },
-                    }}
-                  >
-                    <a>{value}</a>
-                  </Link>
-                );
-              },
+    <Space direction="vertical" size="large">
+      <Button type="primary">
+        <Link href={"/users/create"}>Create User</Link>
+      </Button>
+      <Table
+        loading={isFetching}
+        columns={[
+          {
+            title: "UserName",
+            dataIndex: "Username",
+            render: (value) => {
+              return (
+                <Link
+                  href={{
+                    pathname: "users/[username]",
+                    query: { username: value },
+                  }}
+                >
+                  <a>{value}</a>
+                </Link>
+              );
             },
-            {
-              title: "Name",
-              dataIndex: "Name",
-            },
-            {
-              title: "email",
-              dataIndex: "email",
-            },
-            {
-              title: "SampleCustomAttribute",
-              dataIndex: "custom:sample",
-            },
-            {
-              title: "Created Date",
-              dataIndex: "UserCreateDate",
-              render: renderLocaleTimeStamp,
-            },
-            {
-              title: "Last Modified Date",
-              dataIndex: "UserLastModifiedDate",
-              render: renderLocaleTimeStamp,
-            },
-          ]}
-          dataSource={users}
-        />
-      </Space>
-    </main>
+          },
+          {
+            title: "Name",
+            dataIndex: "Name",
+          },
+          {
+            title: "email",
+            dataIndex: "email",
+          },
+          {
+            title: "SampleCustomAttribute",
+            dataIndex: "custom:sample",
+          },
+          {
+            title: "Created Date",
+            dataIndex: "UserCreateDate",
+            render: renderLocaleTimeStamp,
+          },
+          {
+            title: "Last Modified Date",
+            dataIndex: "UserLastModifiedDate",
+            render: renderLocaleTimeStamp,
+          },
+        ]}
+        dataSource={users}
+      />
+    </Space>
   );
 };
