@@ -17,7 +17,7 @@ import { UnauthorizedError } from "definitions/errors";
 import { auth } from "./auth";
 
 describe("auth.test.ts", () => {
-  describe("auth: 正常系", () => {
+  describe("authorized tests", () => {
     test("should return next()", async () => {
       const req = {} as any;
       const res = {} as any;
@@ -26,7 +26,7 @@ describe("auth.test.ts", () => {
       expect(next).toBeCalled();
     });
   });
-  describe("auth: 異常系ログインしていないケース", () => {
+  describe("unauthorized tests", () => {
     jest.mock("aws-amplify", () => {
       return {
         withSSRContext: jest.fn(() => {

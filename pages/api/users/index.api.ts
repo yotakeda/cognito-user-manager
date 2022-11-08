@@ -30,8 +30,8 @@ const router = createRouter<
 router
   .use(auth)
   .get(async (_req, res) => {
-    const UserPoolId = process.env.USER_POOL_ID;
-    if (!UserPoolId) {
+    const userPoolId = process.env.USER_POOL_ID;
+    if (!userPoolId) {
       res.status(400).json(
         createCommonErrorResponse(400, {
           message: "USER_POOL_ID is not specified",
@@ -49,7 +49,7 @@ router
     const MAX_REQUEST = 20;
     for (let i = 0; i < MAX_REQUEST; i++) {
       const command: ListUsersCommand = new ListUsersCommand({
-        UserPoolId,
+        UserPoolId: userPoolId,
         PaginationToken,
       });
       const results = await cognitoClient.send(command);

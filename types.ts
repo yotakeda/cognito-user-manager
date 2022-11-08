@@ -9,3 +9,8 @@ export type NextPageWithLayout = NextPage & {
 export type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
+
+export type SearchCondition = {
+  Name?: string;
+  Username?: string;
+};
