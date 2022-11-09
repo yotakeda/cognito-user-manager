@@ -14,6 +14,13 @@ export const getCustomAttributeKey = /* GraphQL */ `
           customAttributeValue
           description
           displayOrder
+          customAtrributeKey {
+            customAttributeKey
+            description
+            displayOrder
+            createdAt
+            updatedAt
+          }
           createdAt
           updatedAt
           customAttributeKeyCustomAttributeValuesId
@@ -45,6 +52,15 @@ export const listCustomAttributeKeys = /* GraphQL */ `
         description
         displayOrder
         customAttributeValues {
+          items {
+            id
+            customAttributeValue
+            description
+            displayOrder
+            createdAt
+            updatedAt
+            customAttributeKeyCustomAttributeValuesId
+          }
           nextToken
         }
         createdAt
@@ -66,6 +82,15 @@ export const getCustomAttributeValue = /* GraphQL */ `
         description
         displayOrder
         customAttributeValues {
+          items {
+            id
+            customAttributeValue
+            description
+            displayOrder
+            createdAt
+            updatedAt
+            customAttributeKeyCustomAttributeValuesId
+          }
           nextToken
         }
         createdAt
@@ -97,6 +122,9 @@ export const listCustomAttributeValues = /* GraphQL */ `
           customAttributeKey
           description
           displayOrder
+          customAttributeValues {
+            nextToken
+          }
           createdAt
           updatedAt
         }

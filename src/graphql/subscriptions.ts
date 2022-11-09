@@ -16,6 +16,13 @@ export const onCreateCustomAttributeKey = /* GraphQL */ `
           customAttributeValue
           description
           displayOrder
+          customAtrributeKey {
+            customAttributeKey
+            description
+            displayOrder
+            createdAt
+            updatedAt
+          }
           createdAt
           updatedAt
           customAttributeKeyCustomAttributeValuesId
@@ -41,6 +48,13 @@ export const onUpdateCustomAttributeKey = /* GraphQL */ `
           customAttributeValue
           description
           displayOrder
+          customAtrributeKey {
+            customAttributeKey
+            description
+            displayOrder
+            createdAt
+            updatedAt
+          }
           createdAt
           updatedAt
           customAttributeKeyCustomAttributeValuesId
@@ -66,6 +80,13 @@ export const onDeleteCustomAttributeKey = /* GraphQL */ `
           customAttributeValue
           description
           displayOrder
+          customAtrributeKey {
+            customAttributeKey
+            description
+            displayOrder
+            createdAt
+            updatedAt
+          }
           createdAt
           updatedAt
           customAttributeKeyCustomAttributeValuesId
@@ -91,6 +112,15 @@ export const onCreateCustomAttributeValue = /* GraphQL */ `
         description
         displayOrder
         customAttributeValues {
+          items {
+            id
+            customAttributeValue
+            description
+            displayOrder
+            createdAt
+            updatedAt
+            customAttributeKeyCustomAttributeValuesId
+          }
           nextToken
         }
         createdAt
@@ -116,6 +146,15 @@ export const onUpdateCustomAttributeValue = /* GraphQL */ `
         description
         displayOrder
         customAttributeValues {
+          items {
+            id
+            customAttributeValue
+            description
+            displayOrder
+            createdAt
+            updatedAt
+            customAttributeKeyCustomAttributeValuesId
+          }
           nextToken
         }
         createdAt
@@ -141,6 +180,15 @@ export const onDeleteCustomAttributeValue = /* GraphQL */ `
         description
         displayOrder
         customAttributeValues {
+          items {
+            id
+            customAttributeValue
+            description
+            displayOrder
+            createdAt
+            updatedAt
+            customAttributeKeyCustomAttributeValuesId
+          }
           nextToken
         }
         createdAt
