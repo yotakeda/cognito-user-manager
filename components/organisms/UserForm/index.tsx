@@ -1,8 +1,21 @@
 import { AttributeType } from "@aws-sdk/client-cognito-identity-provider";
-import { Button, Card, Col, Form, Input, Row, Select, Space } from "antd";
+import {
+  Button,
+  Card,
+  Col,
+  Form,
+  Input,
+  message,
+  Modal,
+  Row,
+  Select,
+  Space,
+} from "antd";
 import clsx from "clsx";
 import { useCustomAttributeKeys } from "hooks/admin/useCustomAttributeKeys";
+import { useDeleteUser } from "hooks/useDeleteUser";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
 
 import styles from "./styles.module.css";
@@ -68,8 +81,10 @@ export const UserForm = ({
     userAttributes: AttributeType[] | undefined;
   };
 }) => {
+  const router = useRouter();
   const [form] = Form.useForm();
   const { isLoading, data: dataKeys } = useCustomAttributeKeys();
+  const deleteUserMutation = useDeleteUser();
   return (
     <Space direction="vertical" size="large" className={clsx(styles.space)}>
       <Row justify="space-between">
@@ -80,8 +95,26 @@ export const UserForm = ({
         </Col>
         {type === "update" && (
           <Col>
-            <Button type="primary" danger>
-              <Link href={"/"}>Delete this user</Link>
+            <Button
+              type="primary"
+              danger
+              onClick={() => {
+                Modal.confirm({
+                  title: `username：${initialValues?.username}`,
+                  content: "Are you sure to delete the user?",
+                  onOk() {
+                    deleteUserMutation.mutate(undefined, {
+                      onSuccess: () => {
+                        router.replace(`/`);
+                      },
+                    });
+                  },
+                  okText: "Delete",
+                  cancelText: "Cancel",
+                });
+              }}
+            >
+              Delete this user
             </Button>
           </Col>
         )}

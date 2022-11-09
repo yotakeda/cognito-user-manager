@@ -1,5 +1,6 @@
 import { AdminUpdateUserAttributesRequest } from "@aws-sdk/client-cognito-identity-provider";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { message } from "antd";
 import { fetcher } from "lib/fetcher";
 import { useQueryParams } from "./useQueryParams";
 
@@ -21,8 +22,12 @@ export const useUpdateUserAttribute = () => {
     },
     {
       onSuccess: () => {
+        message.success("User has been successfully updated!");
         queryClient.invalidateQueries(["users"]);
         queryClient.invalidateQueries(["users", username]);
+      },
+      onError() {
+        message.error("Failed to update user.");
       },
     },
   );

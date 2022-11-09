@@ -1,5 +1,6 @@
 import { AdminCreateUserRequest } from "@aws-sdk/client-cognito-identity-provider";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {message} from "antd";
 import { fetcher } from "lib/fetcher";
 
 const createUser = async (
@@ -20,7 +21,11 @@ export const useCreateUser = () => {
     },
     {
       onSuccess: () => {
+        message.success("User successfully created!");
         queryClient.invalidateQueries(["users"]);
+      },
+      onError() {
+        message.error("Failed to create user.");
       },
     },
   );
