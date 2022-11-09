@@ -59,17 +59,13 @@ export const UserForm = ({
       <Row justify="space-between">
         <Col>
           <Button type="link">
-            <Link href={"/"}>
-              <a>Back to users page</a>
-            </Link>
+            <Link href={"/"}>Back to users page</Link>
           </Button>
         </Col>
         {type === "update" && (
           <Col>
             <Button type="primary" danger>
-              <Link href={"/"}>
-                <a>Delete this user</a>
-              </Link>
+              <Link href={"/"}>Delete this user</Link>
             </Button>
           </Col>
         )}

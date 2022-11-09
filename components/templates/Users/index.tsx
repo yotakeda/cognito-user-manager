@@ -30,7 +30,7 @@ export const Users = () => {
                     query: { username: value },
                   }}
                 >
-                  <a>{value}</a>
+                  {value}
                 </Link>
               );
             },
