@@ -1,21 +1,21 @@
 import { GraphQLResult } from "@aws-amplify/api";
 import { useQuery } from "@tanstack/react-query";
 import { API } from "aws-amplify";
-import { ListCustomAttributeKeysQuery } from "../../src/API";
-import { listCustomAttributeKeys } from "../../src/graphql/queries";
+import { ListCustomAttributeValuesQuery } from "../../src/API";
+import { listCustomAttributeValues } from "../../src/graphql/queries";
 
-export const useCustomAttributeKeys = () => {
+export const useCustomAttributeValues = () => {
   const {
     isLoading,
     data: rawData,
     error,
-  } = useQuery(["listCustomAttributeKeys"], () =>
+  } = useQuery(["listCustomAttributeValues"], () =>
     (
       API.graphql({
-        query: listCustomAttributeKeys,
+        query: listCustomAttributeValues,
         authMode: "AMAZON_COGNITO_USER_POOLS",
-      }) as Promise<GraphQLResult<ListCustomAttributeKeysQuery>>
-    ).then((res) => res?.data?.listCustomAttributeKeys),
+      }) as Promise<GraphQLResult<ListCustomAttributeValuesQuery>>
+    ).then((res) => res?.data?.listCustomAttributeValues),
   );
 
   const data =

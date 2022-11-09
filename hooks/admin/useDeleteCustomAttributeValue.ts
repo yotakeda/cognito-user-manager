@@ -3,38 +3,38 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { message } from "antd";
 import { API } from "aws-amplify";
 import {
-  UpdateCustomAttributeKeyInput,
-  UpdateCustomAttributeKeyMutation,
+  DeleteCustomAttributeValueInput,
+  DeleteCustomAttributeValueMutation,
 } from "../../src/API";
-import { updateCustomAttributeKey } from "../../src/graphql/mutations";
+import { deleteCustomAttributeValue } from "../../src/graphql/mutations";
 
-export const useUpdateCustomAttributeKey = () => {
+export const useDeleteCustomAttributeValue = () => {
   const queryClient = useQueryClient();
   const mutation = useMutation(
-    (values: UpdateCustomAttributeKeyInput) =>
+    (values: DeleteCustomAttributeValueInput) =>
       (
         API.graphql({
-          query: updateCustomAttributeKey,
+          query: deleteCustomAttributeValue,
           variables: { input: values },
           authMode: "AMAZON_COGNITO_USER_POOLS",
-        }) as Promise<GraphQLResult<UpdateCustomAttributeKeyMutation>>
-      ).then((res) => res.data?.updateCustomAttributeKey),
+        }) as Promise<GraphQLResult<DeleteCustomAttributeValueMutation>>
+      ).then((res) => res.data?.deleteCustomAttributeValue),
     {
       onSuccess: () => {
-        message.success(`Update CustomAttributeKey success!`);
-        queryClient.invalidateQueries(["listCustomAttributeKeys"]);
+        message.success(`Delete CustomAttributeValue success!`);
+        queryClient.invalidateQueries(["listCustomAttributeValues"]);
       },
       onError: (error: GraphQLResult) => {
         const errors = error?.errors?.map((e: any) => e.errorType);
         message.error(
-          `Failed to update CustomAttributeKey (${errors?.join()})`,
+          `Failed to delete CustomAttributeValue (${errors?.join()})`,
         );
       },
     },
   );
 
   return {
-    updateMutate: mutation.mutate,
+    deleteMutate: mutation.mutate,
     isLoading: mutation.isLoading,
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,

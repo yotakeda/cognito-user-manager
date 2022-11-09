@@ -16,7 +16,6 @@ export const useDeleteCustomAttributeKey = () => {
         API.graphql({
           query: deleteCustomAttributeKey,
           variables: { input: values },
-          // globalに設定できないのか。。
           authMode: "AMAZON_COGNITO_USER_POOLS",
         }) as Promise<GraphQLResult<DeleteCustomAttributeKeyMutation>>
       ).then((res) => res.data?.deleteCustomAttributeKey),

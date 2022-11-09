@@ -3,31 +3,31 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { message } from "antd";
 import { API } from "aws-amplify";
 import {
-  UpdateCustomAttributeKeyInput,
-  UpdateCustomAttributeKeyMutation,
+  UpdateCustomAttributeValueInput,
+  UpdateCustomAttributeValueMutation,
 } from "../../src/API";
-import { updateCustomAttributeKey } from "../../src/graphql/mutations";
+import { updateCustomAttributeValue } from "../../src/graphql/mutations";
 
-export const useUpdateCustomAttributeKey = () => {
+export const useUpdateCustomAttributeValue = () => {
   const queryClient = useQueryClient();
   const mutation = useMutation(
-    (values: UpdateCustomAttributeKeyInput) =>
+    (values: UpdateCustomAttributeValueInput) =>
       (
         API.graphql({
-          query: updateCustomAttributeKey,
+          query: updateCustomAttributeValue,
           variables: { input: values },
           authMode: "AMAZON_COGNITO_USER_POOLS",
-        }) as Promise<GraphQLResult<UpdateCustomAttributeKeyMutation>>
-      ).then((res) => res.data?.updateCustomAttributeKey),
+        }) as Promise<GraphQLResult<UpdateCustomAttributeValueMutation>>
+      ).then((res) => res.data?.updateCustomAttributeValue),
     {
       onSuccess: () => {
-        message.success(`Update CustomAttributeKey success!`);
-        queryClient.invalidateQueries(["listCustomAttributeKeys"]);
+        message.success(`Update CustomAttributeValue success!`);
+        queryClient.invalidateQueries(["listCustomAttributeValues"]);
       },
       onError: (error: GraphQLResult) => {
         const errors = error?.errors?.map((e: any) => e.errorType);
         message.error(
-          `Failed to update CustomAttributeKey (${errors?.join()})`,
+          `Failed to update CustomAttributeValue (${errors?.join()})`,
         );
       },
     },

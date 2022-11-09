@@ -1,16 +1,8 @@
-import { Button } from "antd";
-import Link from "next/link";
+import { AdminCustomAttribute } from "components/templates/AdminCustomAttribute";
 import React from "react";
 
 const CustomAttributePage = () => {
-  return (
-    <>
-      <Button type="link">
-        <Link href={"/"}>Back to users page</Link>
-      </Button>
-      custom attribute
-    </>
-  );
+  return <AdminCustomAttribute />;
 };
 
 export default CustomAttributePage;
