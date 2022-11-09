@@ -32,7 +32,7 @@ const router = createRouter<
 router
   .use(auth)
   .get(async (req, res) => {
-    const { userid } = req.query;
+    const { username } = req.query;
     const userPoolId = process.env.USER_POOL_ID;
     if (!userPoolId) {
       res.status(400).json(
@@ -44,7 +44,7 @@ router
     }
 
     const command = new AdminGetUserCommand({
-      Username: String(userid),
+      Username: String(username),
       UserPoolId: userPoolId,
     });
     try {
@@ -66,7 +66,7 @@ router
       AdminUpdateUserAttributesCommandInput,
       "UserPoolId" | "Username"
     >;
-    const { userid } = req.query;
+    const { username } = req.query;
     const userPoolId = process.env.USER_POOL_ID;
     if (!userPoolId) {
       res.status(400).json(
@@ -77,7 +77,7 @@ router
       return;
     }
     const getUserCommand = new AdminGetUserCommand({
-      Username: String(userid),
+      Username: String(username),
       UserPoolId: userPoolId,
     });
     let userInfo: AdminGetUserResponse;
@@ -115,7 +115,7 @@ router
     if (deleteAttributes?.length) {
       const deleteCommand = new AdminDeleteUserAttributesCommand({
         UserAttributeNames: deleteAttributes,
-        Username: String(userid),
+        Username: String(username),
         UserPoolId: userPoolId,
       });
       try {
@@ -134,7 +134,7 @@ router
 
     const updateAttributesCommand = new AdminUpdateUserAttributesCommand({
       UserAttributes: addEmailVerified(params?.UserAttributes),
-      Username: String(userid),
+      Username: String(username),
       UserPoolId: userPoolId,
     });
     try {
@@ -151,7 +151,7 @@ router
     }
   })
   .delete(async (req, res) => {
-    const { userid } = req.query;
+    const { username } = req.query;
     const userPoolId = process.env.USER_POOL_ID;
     if (!userPoolId) {
       res.status(400).json(
@@ -162,7 +162,7 @@ router
       return;
     }
     const command = new AdminDeleteUserCommand({
-      Username: String(userid),
+      Username: String(username),
       UserPoolId: userPoolId,
     });
     try {
