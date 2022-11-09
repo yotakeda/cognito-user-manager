@@ -1,11 +1,23 @@
 import React from "react";
 import { UserForm } from "components/organisms/UserForm";
-import { useRouter } from "next/router";
+import { useGetUser } from "hooks/useGetUser";
+import { useUpdateUserAttribute } from "hooks/useUpdateUserAttribute";
 
 export const User = () => {
-  const router = useRouter();
-  const username = router.query.username as string;
+  const { user, isLoading } = useGetUser();
+  const mutation = useUpdateUserAttribute();
   return (
-    <UserForm type="update" initialValues={{ username, email: undefined }} />
+    <UserForm
+      type="update"
+      loading={isLoading}
+      onSubmit={(values) => {
+        const { userAttributes } = values;
+        mutation.mutate({ UserAttributes: userAttributes });
+      }}
+      initialValues={{
+        username: user?.Username,
+        userAttributes: user?.UserAttributes,
+      }}
+    />
   );
 };

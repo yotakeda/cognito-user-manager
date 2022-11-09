@@ -1,13 +1,4 @@
-import {
-  Button,
-  Col,
-  Form,
-  Input,
-  InputNumber,
-  Row,
-  Select,
-  Space,
-} from "antd";
+import { Button, Col, Form, Input, InputNumber, Row, Select } from "antd";
 import { useCreateCustomAttributeValue } from "hooks/admin/useCreateCustomAttributeValue";
 import { useCustomAttributeKeys } from "hooks/admin/useCustomAttributeKeys";
 import React from "react";
@@ -16,7 +7,7 @@ const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
     sm: { span: 8 },
-    md: { span: 6 },
+    md: { span: 8 },
   },
   wrapperCol: {
     xs: { span: 24 },
@@ -49,7 +40,10 @@ const ValueFormPresentation = ({
           onSubmit(values);
         }}
       >
-        <Form.Item name="customAttributeKeyCustomAttributeValuesId" label="Key">
+        <Form.Item
+          name="customAttributeKeyCustomAttributeValuesId"
+          label="Custom Attribute Key"
+        >
           <Select
             options={customAttributeKeys?.map((key) => ({
               label: key,
@@ -57,7 +51,7 @@ const ValueFormPresentation = ({
             }))}
           />
         </Form.Item>
-        <Form.Item name="customAttributeValue" label="Value">
+        <Form.Item name="customAttributeValue" label="Custom Attribute Value">
           <Input />
         </Form.Item>
         <Form.Item name="displayOrder" label="Display Order">
@@ -65,22 +59,11 @@ const ValueFormPresentation = ({
         </Form.Item>
         <Row justify="center">
           <Col>
-            <Space size="large">
-              <Form.Item>
-                <Button type="primary" htmlType="submit" size="large">
-                  Create
-                </Button>
-              </Form.Item>
-              <Form.Item>
-                <Button
-                  onClick={() => {
-                    form.resetFields();
-                  }}
-                >
-                  Reset
-                </Button>
-              </Form.Item>
-            </Space>
+            <Form.Item>
+              <Button type="primary" htmlType="submit" size="large">
+                Create
+              </Button>
+            </Form.Item>
           </Col>
         </Row>
       </Form>

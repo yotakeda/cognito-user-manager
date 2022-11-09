@@ -1,5 +1,7 @@
+import { AttributeType } from "@aws-sdk/client-cognito-identity-provider";
 import { Button, Card, Col, Form, Input, Row, Select, Space } from "antd";
 import clsx from "clsx";
+import { useCustomAttributeKeys } from "hooks/admin/useCustomAttributeKeys";
 import Link from "next/link";
 import React from "react";
 
@@ -41,19 +43,33 @@ export const passwordRules = [
   },
 ];
 
+const _findUserAttribute = (
+  attributeName: string,
+  userAttributes: AttributeType[] | undefined,
+) => {
+  return userAttributes?.find((attr) => attr.Name === attributeName)?.Value;
+};
+
 export const UserForm = ({
   type,
+  loading = false,
   onSubmit,
   initialValues,
 }: {
   type: "create" | "update";
-  onSubmit: () => void;
+  loading?: boolean;
+  onSubmit: (arg: {
+    username: string;
+    password?: string;
+    userAttributes: AttributeType[];
+  }) => void;
   initialValues?: {
     username: string | undefined;
-    email: string | undefined;
+    userAttributes: AttributeType[] | undefined;
   };
 }) => {
   const [form] = Form.useForm();
+  const { isLoading, data: dataKeys } = useCustomAttributeKeys();
   return (
     <Space direction="vertical" size="large" className={clsx(styles.space)}>
       <Row justify="space-between">
@@ -70,12 +86,25 @@ export const UserForm = ({
           </Col>
         )}
       </Row>
-      <Card title={type === "create" ? "Create User" : "User Information"}>
+      <Card
+        title={type === "create" ? "Create User" : "User Information"}
+        loading={isLoading || loading}
+      >
         <Form
           form={form}
           {...formItemLayout}
           scrollToFirstError
-          onFinish={onSubmit}
+          onFinish={(values) => {
+            const { username, password, ...rest } = values;
+            const userAttributes = Object.keys(rest)
+              .map((key) => ({
+                Name: key,
+                Value: rest[key],
+              }))
+              .filter((item) => item.Value != null);
+            onSubmit({ username, password, userAttributes });
+          }}
+          colon={false}
         >
           <Form.Item
             name="username"
@@ -83,6 +112,16 @@ export const UserForm = ({
             initialValue={initialValues?.username}
           >
             <Input disabled={type === "update"} />
+          </Form.Item>
+          <Form.Item
+            name="name"
+            label="name"
+            initialValue={_findUserAttribute(
+              "name",
+              initialValues?.userAttributes,
+            )}
+          >
+            <Input />
           </Form.Item>
           {type === "create" && (
             <Form.Item
@@ -97,28 +136,40 @@ export const UserForm = ({
           <Form.Item
             name="email"
             label="email"
-            initialValue={initialValues?.email}
+            initialValue={_findUserAttribute(
+              "email",
+              initialValues?.userAttributes,
+            )}
           >
             <Input />
           </Form.Item>
-          {/* FIXME fetch from API */}
-          <Form.Item name="customAttribute1" label="customAttribute1">
-            <Select options={[{ value: "test", label: "test" }]} allowClear />
-          </Form.Item>
+          {dataKeys.map((dataKey) => {
+            const customAttributeKey = `custom:${dataKey.customAttributeKey}`;
+            return (
+              <Form.Item
+                name={customAttributeKey}
+                label={customAttributeKey}
+                initialValue={_findUserAttribute(
+                  customAttributeKey,
+                  initialValues?.userAttributes,
+                )}
+                key={dataKey.customAttributeKey}
+              >
+                <Select
+                  options={dataKey.customAttributeValues?.items.map((item) => ({
+                    label: item?.customAttributeValue,
+                    value: item?.customAttributeValue,
+                  }))}
+                  allowClear
+                />
+              </Form.Item>
+            );
+          })}
           <Row justify="center">
             <Col>
-              <Space size="large">
-                <Button
-                  onClick={() => {
-                    form.resetFields();
-                  }}
-                >
-                  Reset
-                </Button>
-                <Button type="primary" htmlType="submit">
-                  {type === "create" ? "Create" : "Update"}
-                </Button>
-              </Space>
+              <Button type="primary" htmlType="submit">
+                {type === "create" ? "Create" : "Update"}
+              </Button>
             </Col>
           </Row>
         </Form>

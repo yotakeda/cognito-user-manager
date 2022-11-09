@@ -6,7 +6,7 @@ const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
     sm: { span: 8 },
-    md: { span: 6 },
+    md: { span: 8 },
   },
   wrapperCol: {
     xs: { span: 24 },
@@ -38,7 +38,7 @@ const KeyFormPresentation = ({
           form.resetFields();
         }}
       >
-        <Form.Item name="customAttributeKey" label="Key">
+        <Form.Item name="customAttributeKey" label="Custom Attribute Key">
           <Input />
         </Form.Item>
         <Form.Item name="description" label="Description">
@@ -53,15 +53,6 @@ const KeyFormPresentation = ({
               <Form.Item>
                 <Button type="primary" htmlType="submit" size="large">
                   Create
-                </Button>
-              </Form.Item>
-              <Form.Item>
-                <Button
-                  onClick={() => {
-                    form.resetFields();
-                  }}
-                >
-                  Reset
                 </Button>
               </Form.Item>
             </Space>

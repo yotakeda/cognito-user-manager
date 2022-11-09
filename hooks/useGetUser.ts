@@ -18,16 +18,12 @@ export const useGetUser = () => {
     },
     {
       enabled: router.isReady,
-      // 裏で再fetchしないように設定
-      // 基本は更新時にrefetchするようにした方が良さそう
-      // mount時にもrefetchが走ってしまう
-      staleTime: 3600000,
     },
   );
   return {
     isLoading,
     isFetching,
-    data,
+    user: data?.data,
     error,
   };
 };
